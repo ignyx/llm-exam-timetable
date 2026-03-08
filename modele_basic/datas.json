@@ -1,0 +1,38 @@
+{
+  "nbEtud": 10,
+  "nbTuteurPeda": 3,
+  "nbSpe": 2,
+  "nbSalle": 1,
+  "nbTuteurIndus": 10,
+  "nbJour": 1,
+  "nbEntreprise": 8,
+
+  "etudiantTP": [1, 1, 2, 2, 1, 1, 3, 2, 3, 3],
+  "etudiantTI": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  "etudiantSpe": [1, 1, 1, 1, 1, 1, 2, 2, 2, 2],
+  "etudiantEtp": [1, 1, 2, 2, 3, 4, 5, 6, 7, 8],
+
+  "DispoJourSpe": [
+    [true],
+    [true]
+  ],
+
+  "dispoTP": [
+    [ [true, true, true] ],
+    [ [true, true, true] ],
+    [ [true, true, true] ]
+  ],
+
+  "dispoTI": [
+    [ [true, true, true] ],
+    [ [true, true, true] ],
+    [ [true, true, true] ],
+    [ [true, true, true] ],
+    [ [true, true, true] ],
+    [ [true, true, true] ],
+    [ [true, true, true] ],
+    [ [true, true, true] ],
+    [ [true, true, true] ],
+    [ [true, true, true] ]
+  ]
+}
