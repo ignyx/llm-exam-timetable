@@ -24,5 +24,6 @@
     "timetabling"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "npm"
 }
