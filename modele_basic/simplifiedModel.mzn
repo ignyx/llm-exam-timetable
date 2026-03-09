@@ -1,8 +1,8 @@
 %! -- INTERN PARAMETERS -- 
 
 set of int: Sessions = 1..3;
-set of int: Positions = 1..4;
-
+set of int: Positions = 1..3;
+ 
 
 %! -- EXTERN PARAMETERS --  
 % Constants
@@ -49,23 +49,36 @@ predicate sameTime(int: i, int: j) =
     session[i] == session[j] /\ 
     position[i] == position[j];
 
-predicate present(int: e, int: j, int: s, int: p) =
-    jour[e] == j /\ session[e] == s /\ position[e] == p;
+predicate present(int: e, int: j, int: s, int: p) = 
+    jour[e] == j /\ session[e] == s /\ position[e] == p; 
 
 %! -- CONSTRAINTS -- 
 
-% Deux étudiants ne peuvent pas passé en même temps, dans la même salle 
+% * Conditions de session
+
+% Deux étudiants ne peuvent pas passé en même temps, dans la même salle.
 constraint forall(i, j in Etudiants where i < j) (
-    (sameTime(i, j)) -> ((salle[i] != salle[j]) /\ etudiantSpe[i] != etudiantSpe[j])
+    (sameTime(i, j)) -> (salle[i] != salle[j])
 );
 
-% Sessions de l'aprèm-midi possède 3 slots.
+% Les sessions de l'aprèm-midi possèdent 3 slots.
 constraint forall(e in Etudiants) (
     (session[e] >= 2) -> (position[e] <= 3)
 );
 
-%présence obligatoire du respo d'année, lors du passage d'un de ses étudiants
+% Lors d'un session, tout les étudiants d'un spé sont dans la même salle, 
+% qui accueille uniquement les étudiants de cette spé.
+constraint forall(e, f in Etudiants where e < f)(
+    (jour[e] == jour[f] /\ session[e] == session[f]) 
+    -> (etudiantSpe[e] == etudiantSpe[f] <-> salle[e] == salle[f])
+);
+
+% * Conditions de présence
+
+%présence obligatoire du respo d'année, lors du passage d'un de ses étudiant.
 %TODO présense vérifié ici est QUE la journée. 
+%TODO Ici, c'est en réalité une condition de disponibilité, et non de présence.
+%TODO: a transformer en condition de présence comme le tuteur en bas, + condi de dispo, + condi de préférence
 constraint forall(e in Etudiants, j in Jours) (
     (jour[e] == j -> DispoJourSpe[etudiantSpe[e], j])
 );
@@ -86,6 +99,7 @@ constraint forall(e, f in Etudiants where e > f)(
     -> (salle[e] == salle[f])
 );
 
+% * Contraintes de disponibilités.
 
 % Dispo TP
 constraint forall(e in Etudiants, j in Jours, s in Sessions, p in Positions) (
@@ -97,14 +111,12 @@ constraint forall(e in Etudiants, j in Jours, s in Sessions, p in Positions) (
     present(e, j, s, p) -> dispoTI[etudiantTI[e], j, s]
 );
 
-constraint forall(e, f in Etudiants where e < f, j in Jours, s in Sessions)(
-    (jour[e] == j /\ session[e] == s /\ jour[f] == j /\ session[f] == s) 
-    -> (etudiantSpe[e] == etudiantSpe[f])
-);
+%  * Contraintes d'arrangement
 
 
 %! -- Objective --
 solve satisfy;
+
 
 %! -- AFFICHAGE DES RÉSULTATS (OUTPUT) --
 
