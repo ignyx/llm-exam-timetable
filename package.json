@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "llm-exam-timetable",
   "version": "0.0.1",
   "description": "Plan exam timetables using LLM-assisted constraint programming.",
@@ -8,14 +9,15 @@
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
     "test:report": "npx playwright show-report",
-    "lint": "eslint . && prettier --check .",
-    "lint-fix": "eslint --fix . && prettier --write ."
+    "lint": "eslint && prettier --check .",
+    "lint-fix": "eslint --fix && prettier --write ."
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "1.58.2",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.1.3",
+    "eslint": "10.0.3",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "prettier": "^3.2.5",
     "serve": "14.2.6"
   },
