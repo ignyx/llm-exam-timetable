@@ -1,0 +1,22 @@
+{
+  "name": "llm-exam-timetable",
+  "version": "0.0.1",
+  "description": "Plan exam timetables using LLM-assisted constraint programming.",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "test:report": "npx playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2",
+    "serve": "14.2.6"
+  },
+  "keywords": [
+    "minizinc",
+    "timetabling"
+  ],
+  "author": "",
+  "license": "MIT"
+}
