@@ -12,6 +12,11 @@
   "etudiantSpe": [1, 1, 1, 1, 1, 2, 2, 2, 2, 2],
   "etudiantEtp": [1, 1, 2, 2, 3, 4, 5, 6, 7, 8],
 
+  "pairesIncompatibles": [
+    {"etp1": 1, "etp2": 2},
+    {"etp1": 5, "etp2": 6}
+  ],
+
   "DispoJourSpe": [[true], [true]],
 
   "dispoTP": [[[true, true, true]], [[true, true, true]], [[true, true, true]]],

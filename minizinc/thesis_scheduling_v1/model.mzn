@@ -1,3 +1,10 @@
+%TODO : Transform some constraints for optimisation constraints
+%TODO : Preference of the Specialities (OK to make the 3 sessions/day or max 2/day)
+%TODO : try to regroup people by tematics
+%TODO : regroup students who have the same TP, per pair, in the same session. 
+%TODO : take care of the time difference of students.
+%TODO
+
 %! -- INTERN PARAMETERS -- 
 
 set of int: Sessions = 1..3;
@@ -14,6 +21,7 @@ int: nbTuteurIndus;
 int: nbJour;
 int: nbEntreprise;
 
+
 % Sets 
 set of int: Etudiants = 1..nbEtud;
 set of int: TuteursP = 1..nbTuteurPeda;
@@ -28,6 +36,8 @@ array[Etudiants] of int: etudiantTP;
 array[Etudiants] of int: etudiantTI;
 array[Etudiants] of int: etudiantSpe;
 array[Etudiants] of int: etudiantEtp;
+
+array[int] of record(int: etp1, int: etp2): pairesIncompatibles;
 
 %Arrays of disponibilities
 array[TuteursP, Jours, Sessions] of bool: dispoTP;
@@ -79,8 +89,8 @@ constraint forall(e, f in Etudiants where e < f)(
 %TODO présense vérifié ici est QUE la journée. 
 %TODO Ici, c'est en réalité une condition de disponibilité, et non de présence.
 %TODO: a transformer en condition de présence comme le tuteur en bas, + condi de dispo, + condi de préférence
-constraint forall(e in Etudiants, j in Jours) (
-    (jour[e] == j -> DispoJourSpe[etudiantSpe[e], j])
+constraint forall(e in Etudiants) (
+    DispoJourSpe[etudiantSpe[e], jour[e]]
 );
 
 % Contrainte de présence du tuteur péda. Il ne peut y avoir deux étudiants dans deux
@@ -89,29 +99,33 @@ constraint forall(e in Etudiants, j in Jours) (
 %TODO: le transformer en contrainte par slot et non par session.
 %TODO: ne pas oublier (plus tard) de mettre des grosses pénalités pour faire.
 %TODO: attention qu'on priorise la présence, dans son entièreté, à une session.
-
-constraint forall(e, f in Etudiants where e > f)(
-    (
-        etudiantTP[e] == etudiantTP[f] /\
-        jour[e] == jour[f] /\
-        session[e] == session[f]
-    )
+constraint forall(e, f in Etudiants where e > f /\ etudiantTP[e] == etudiantTP[f])(
+    (jour[e] == jour[f] /\ session[e] == session[f])
     -> (salle[e] == salle[f])
 );
 
 % * Contraintes de disponibilités.
 
 % Dispo TP
-constraint forall(e in Etudiants, j in Jours, s in Sessions, p in Positions) (
-    present(e, j, s, p) -> dispoTP[etudiantTP[e], j, s]
+constraint forall(e in Etudiants) (
+    dispoTP[etudiantTP[e], jour[e], session[e]]
 );
 
 % Dispo TI
-constraint forall(e in Etudiants, j in Jours, s in Sessions, p in Positions) (
-    present(e, j, s, p) -> dispoTI[etudiantTI[e], j, s]
+constraint forall(e in Etudiants) (
+    dispoTI[etudiantTI[e], jour[e], session[e]]
 );
 
 %  * Contraintes d'arrangement
+
+% Les entreprises incompatibles ne se retrouve pas dans la même session
+constraint forall(e, f in Etudiants where e < f, c in pairesIncompatibles 
+    where (c.etp1 == etudiantEtp[e] /\ c.etp2 == etudiantEtp[f]) \/ 
+          (c.etp1 == etudiantEtp[f] /\ c.etp2 == etudiantEtp[e])
+)(
+    not(jour[e] == jour[f] /\ session[e] == session[f])
+);
+
 
 
 %! -- Objective --
