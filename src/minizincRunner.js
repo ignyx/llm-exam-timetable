@@ -1,5 +1,5 @@
 async function fetchModelAndData() {
-  const modelResponse = await fetch('minizinc/thesis_scheduling_v0/model.mzn');
+  const modelResponse = await fetch('minizinc/thesis_scheduling_v1/model.mzn');
   const modelContent = await modelResponse.text();
 
   const dataResponse = await fetch(
@@ -41,6 +41,7 @@ async function runMinizincAndDisplay() {
 
     const result = await runMiniZincModel();
     console.log('MiniZinc result:', result);
+
 
     const solutions = result.solution
       ? `<pre>${result.solution.output.default}</pre>
