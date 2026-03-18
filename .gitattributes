@@ -1,0 +1,3 @@
+# https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings#example
+# Set the default behavior to automatically normalize line endings (CRLF / LF ).
+* text=auto
