@@ -29,6 +29,11 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/', '*.min.js', 'playwright.config.js'],
+    ignores: [
+      'node_modules/',
+      '*.min.js',
+      'playwright.config.js',
+      'playwright-report',
+    ],
   },
 ];
