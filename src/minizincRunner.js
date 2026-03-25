@@ -1,21 +1,18 @@
-async function fetchModelAndData() {
-  const modelResponse = await fetch('minizinc/thesis_scheduling_v0/model.mzn');
-  const modelContent = await modelResponse.text();
-
-  const dataResponse = await fetch(
-    'minizinc/thesis_scheduling_v0/small_example_success.dzn'
-  );
-  const dataContent = await dataResponse.text();
-
-  return { modelContent, dataContent };
+// Fonction pour récupérer UNIQUEMENT le modèle MZN (les données viennent désormais de l'app)
+async function fetchModel() {
+  const modelResponse = await fetch('minizinc/thesis_scheduling_v1/model.mzn');
+  return await modelResponse.text();
 }
 
-async function runMiniZincModel() {
-  const { modelContent, dataContent } = await fetchModelAndData();
+// Modifié pour accepter l'objet jsonData
+async function runMiniZincModel(jsonData) {
+  const modelContent = await fetchModel();
 
   const model = new MiniZinc.Model();
   model.addFile('model.mzn', modelContent);
-  model.addFile('data.dzn', dataContent);
+  
+  // On passe le JSON généré dynamiquement au solveur en le convertissant en texte
+  model.addFile('data.json', JSON.stringify(jsonData));
 
   const solve = model.solve({
     options: {
@@ -24,38 +21,55 @@ async function runMiniZincModel() {
     },
   });
 
-  /*
-  solve.on('solution', (solution) => {
-    // Do something
-  });
-  */
-
   return await solve;
 }
 
-// eslint-disable-next-line no-unused-vars
-async function runMinizincAndDisplay() {
+// On ajoute 'mappingData' comme deuxième paramètre
+async function runMinizincAndDisplay(jsonData, mappingData) {
+  const solverResultsElement = document.getElementById('solver-results');
+  
   try {
-    const resultsElement = document.getElementById('results');
-    resultsElement.textContent = 'Running MiniZinc model...';
+    solverResultsElement.innerHTML = '<p style="color: #0078D4; font-weight: bold;">⏳ Exécution du modèle MiniZinc en cours (cela peut prendre quelques secondes)...</p>';
 
-    const result = await runMiniZincModel();
+    const result = await runMiniZincModel(jsonData);
     console.log('MiniZinc result:', result);
 
-    const solutions = result.solution
-      ? `<pre>${result.solution.output.default}</pre>
-        <pre>${JSON.stringify(result.solution.output.json, null, 2)}</pre>`
-      : 'No solution found';
+    let finalOutput = "";
 
-    resultsElement.innerHTML =
+    if (result.solution) {
+        // On récupère le texte brut généré par ton model.mzn
+        let rawText = result.solution.output.default;
+
+        // MAGIE JAVASCRIPT : On détecte la phrase "🎓 Étudiant X (Spé: Y...)" 
+        // et on la remplace dynamiquement par les vraies informations du dictionnaire
+        finalOutput = rawText.replace(/🎓 Étudiant (\d+) \([^)]+\)/g, (match, idString) => {
+            const etudiantId = parseInt(idString);
+            const infos = mappingData[etudiantId]; // On pioche dans le dictionnaire
+            
+            if (infos) {
+                // On crée notre belle ligne lisible
+                return `🎓 ${infos.nom} | 🏢 Entr: ${infos.etp} | 📚 Spé: ${infos.spe} | 👨‍🏫 TP: ${infos.tp} | 👔 TI: ${infos.ti}`;
+            }
+            return match; // Sécurité : si l'étudiant n'est pas trouvé, on laisse le texte d'origine
+        });
+        
+        // On l'encadre dans une balise <pre> pour garder la mise en forme
+        finalOutput = `<pre style="background: #f1f1f1; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 14px; line-height: 1.5;">${finalOutput}</pre>`;
+    } else {
+        finalOutput = '<p class="error">Aucune solution trouvée avec ces paramètres. Essaie d\'augmenter le nombre de jours ou de salles.</p>';
+    }
+
+    // Affichage sur la page Web
+    solverResultsElement.innerHTML =
       `
-        <h3>MiniZinc Results</h3>
-        <p><strong>Status:</strong> ${result.status}</p>
-        <p><strong>Solutions:</strong></p>
-      ` + solutions;
+        <h3>⚙️ Résultats du Solveur</h3>
+        <p><strong>Statut:</strong> ${result.status}</p>
+        <div>${finalOutput}</div>
+      `;
   } catch (error) {
-    const resultsElement = document.getElementById('results');
-    resultsElement.textContent = `Error: ${error.message}`;
-    console.error('Error executing MiniZinc model:', error);
+    console.error(error);
+    solverResultsElement.innerHTML = `<p class="error">Erreur lors de l'exécution du solveur : ${error.message}</p>`;
   }
 }
+
+

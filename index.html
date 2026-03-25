@@ -1,22 +1,72 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exam Timetabling</title>
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <div id="app">
-      <h1>Exam Timetable App</h1>
-      <p id="status" data-testid="status">Loading...</p>
-      <button data-testid="execute-button" onclick="runMinizincAndDisplay()">
-        Execute MiniZinc Model
-      </button>
-      <div id="results"></div>
-    </div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planification des soutenances</title>
+    
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/minizinc/dist/minizinc.js"></script>
+</head>
+<body>
+    <div id="status" style="font-weight: bold; margin-bottom: 10px;">Initialisation...</div>
+
+    <h2>Planification et Analyse de stage</h2>
+
+    <div class="upload-container">
+        <button class="btn-import">Sélectionner un fichier .xlsx</button>
+        <input type="file" id="excel-input" accept=".xlsx, .xls">
+    </div>
+
+    <div id="file-info">Aucun fichier sélectionné.</div>
+
+    <div id="params-section" class="card-section">
+        <h3>Paramètres de planification</h3>
+        <div class="param-group">
+            <label for="nb-salles">Nombre de salles :</label>
+            <input type="number" id="nb-salles" value="1" min="1">
+        </div>
+        <div class="param-group">
+            <label for="etu-par-slot">Étudiants par slot :</label>
+            <input type="number" id="etu-par-slot" value="1" min="1">
+        </div>
+        <div class="param-group">
+            <label for="nb-jours">Jours disponibles :</label>
+            <input type="number" id="nb-jours" value="2" min="1">
+        </div>
+    </div>
+
+    <div id="incomp-section" class="card-section">
+        <h3>Ajouter des entreprises concurrentes</h3>
+        <div class="pair-selector">
+            <select id="select-etp-1"></select>
+            <span>-</span>
+            <select id="select-etp-2"></select>
+            <button id="btn-add-pair" class="btn-action">Ajouter duo</button>
+        </div>
+        <ul id="pairs-list"></ul>
+    </div>
+
+    <div class="actions-container">
+        <button id="btn-analyse" class="btn-action">Lancer l'analyse</button>
+        <button id="btn-download" class="btn-action">Télécharger le JSON</button>
+        <button id="btn-generate-schedule" class="btn-action btn-success">Générer emploi du temps</button>
+    </div>
+
+    <div id="results">
+        <h3>📊 Résultats globaux</h3>
+        <ul id="results-list-base"></ul>
+        <h3>📅 Faisabilité du planning</h3>
+        <ul id="results-list-planning"></ul>
+        
+        <div id="solver-results"></div>
+    </div>
+
     <script src="src/minizincRunner.js"></script>
     <script src="src/app.js"></script>
-  </body>
+</body>
 </html>
+
+
