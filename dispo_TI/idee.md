@@ -5,6 +5,9 @@ En entrée : Tableau convention de stage contenant
             - le nom du tuteur industriel de chaque étudiant
             - l'adresse mail du tuteur industriel de chaque étudiant
 
+**Lien poll framadate**
+https://beta.framadate.org/polls/0541c19fd134d2985385
+
 **Pour connaître les disponibilités des tuteurs industriels**
 1. Creation d'un framadate/framaform
 2. Extraction des mails tuteurs à partir du tableau en entrée
