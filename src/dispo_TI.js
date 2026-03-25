@@ -29,8 +29,8 @@ function handleFile(event) {
         const emailList = emails.join(";");
 
         // Optional subject & body
-        const subject = encodeURIComponent("Your Subject Here");
-        const body = encodeURIComponent("Hello,\n\nYour message here.");
+        const subject = encodeURIComponent("Subject");
+        const body = encodeURIComponent("Hello,\n\nMessage.");
 
         const mailtoLink = `mailto:${emailList}?subject=${subject}&body=${body}`;
 
