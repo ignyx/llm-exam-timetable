@@ -37,6 +37,13 @@ async function runMinizincAndDisplay(jsonData, mappingData) {
     let finalOutput = "";
 
     if (result.solution) {
+        // Event pour envoyer les données à "export.js" pour le traiter et mettre sous forme Excel
+        const event_export_minizinc = new CustomEvent('MiniZincSolved', { detail: result });
+        window.dispatchEvent(event_export_minizinc);
+
+
+
+
         // On récupère le texte brut généré par ton model.mzn
         let rawText = result.solution.output.default;
 

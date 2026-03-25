@@ -1,56 +1,97 @@
-function export_test() {
-    const data = [
-        ["tirsdag 24 juni 2025", "", "", "", "", "", "", "", "", "", ""],
-        ["", "Salle GEI 015", "", "", "Salle GEI 013", "", "", "Salle GEI 215 (matin) et GEI 013 (après-midi)", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", ""],
-        ["", "SDBD", "A. HOLMSEN", "", "ESPE", "A. LIU", "", "ISS", "S. GRENIER", "", ""],
-        ["", "Etudiant", "Entreprise", "Correspondant", "Etudiant", "Entreprise", "Correspondant", "Etudiant", "Entreprise", "Correspondant", ""],
-        ["09h30-10h00", "Nicolas FOURNIER", "KFC", "Marcel Morel", "", "", "", "", "", "", "09h30-10h00"],
-        ["10h00-10h30", "Vincent GARCIA", "IKEA", "Mohamed Ali", "Michel FRANCOIS", "Renault", "Henri Renault", "", "", "", "10h00-10h30"],
-        ["10h30-11h00", "Florent HOLMSEN", "IKEA", "Arthur BYTE-MONNOT", "Vincent JANKOWSKI", "Casino", "AIME Martin", "Andreas ANDRE", "Burger King", "Albert Lemoine", "10h30-11h00"],
-        ["11h00-11h30", "Noah ROHEL", "McDonald's", "Marcel Morel", "", "", "", "Alice MULLER", "Auchan", "Albert Lemoine", "11h00-11h30"],
-        ["Délibération", "", "", "", "", "", "", "", "", "", "Délibération"],
-        ["REPAS", "", "", "", "", "", "", "", "", "", "REPAS"],
-        ["13h30-14h00", "Laure LEFEBVRE", "Leclerc", "Didier LE BOTWLAN", "", "", "", "", "", "", "13h30-14h00"],
-        ["14h00-14h30", "Grete ROBIN", "Orange", "Arthur BYTE-MONNOT", "", "", "", "Wictor RICHARD", "Burger King", "Paulette Guerin", "14h00-14h30"],
-        ["14h30-15h00", "Luc LAURENT", "MI6", "Albert Colin", "", "", "", "Hans BOYER", "Spotify", "Fernand Masson", "14h30-15h00"],
-        ["Délibération", "", "", "", "", "", "", "", "", "", "Délibération"],
-        ["PAUSE", "", "", "", "", "", "", "", "", "", "PAUSE"],
-        ["16h15-16h45", "Luc BLANC", "Carrefour", "Sami Yangui", "", "", "", "Marie BERNARD", "La poste", "Marguerite Faure", "16h15-16h45"],
-        ["16h45-17h15", "Marie ROBERT", "Dennis (visio", "Henri Renault", "", "", "", "Laure FRANCOIS", "CERN", "Jeanne Dupont", "16h45-17h15"],
-        ["17h15-17h45", "Nathalie DUPUIS", "Wendy's", "Yoni LAHANA", "", "", "", "Paul MOREAU", "Boulangerie", "Lucien Caron", "17h15-17h45"],
-        ["Délibération", "", "", "", "", "", "", "", "", "", "Délibération"]
-    ];
+var gotten_result = false;
 
-    const worksheet = XLSX.utils.aoa_to_sheet(data);
-
-    worksheet['!merges'] = [
-    { s: { r: 0, c: 0 }, e: { r: 0, c: 10 } }
-];
-
-data[1].forEach((cell, colIdx) => {
-    if (cell.startsWith("Salle")) {
-        if (colIdx + 1 < data[1].length && data[1][colIdx + 1] === "") {
-            worksheet['!merges'].push({
-                s: { r: 1, c: colIdx },
-                e: { r: 1, c: colIdx + 2 }
-            });
-        }
-    }
+// Listener, checks when minizinc is done and takes the result for exporting
+window.addEventListener('MiniZincSolved', (e) => {
+     window.lastMiniZincResult = e.detail; // <-- Add this line
+    gotten_result = true;
+    console.log("Export.js received the minizinc result!");
+    console.log(window.lastMiniZincResult.solution.output);
 });
 
-// Auto column width calculation
-worksheet['!cols'] = data[0].map((_, colIdx) => {
-    let maxLen = 10; // Minimum width
-    data.forEach(row => {
-        const cell = row[colIdx];
-        if (cell && cell.toString().length > maxLen) {
-            maxLen = cell.toString().length;
+// Parsing function
+function parseScheduleString(scheduleStr, mapping) {
+    const lines = scheduleStr.split('\n').filter(line => line.trim() !== "");
+    const rows = [];
+    let currentJour = "";
+    let currentSession = "";
+
+    // Add header row for Excel
+    rows.push([
+        "Jour",
+        "Session",
+        "Salle",
+        "Position",
+        "Étudiant",
+        "Spécialité",
+        "Tuteur Pédagogique",
+        "Tuteur Industriel"
+    ]);
+
+    lines.forEach(line => {
+        if (line.startsWith('--- JOUR')) {
+            const match = line.match(/--- JOUR (\d+) \| SESSION (\d+) ---/);
+            if (match) {
+                currentJour = match[1];
+                currentSession = match[2];
+            } else {
+                currentJour = "";
+                currentSession = "";
+            }
+        } else if (line.trim().startsWith('🏛️')) {
+            // Match: 🏛️ Salle 1 | ⏰ Pos 1 -> 🎓 Étudiant 5 (Spé: 1, TP: 1, TI: 5)
+            const match = line.match(
+                /🏛️ Salle (\d+)\s*\|\s*⏰ Pos (\d+)\s*->\s*🎓 Étudiant (\d+)\s*\(Spé:\s*([^,]+),\s*TP:\s*([^,]+),\s*TI:\s*([^)]+)\)/
+            );
+            if (match) {
+                const etuId = parseInt(match[3].trim());
+                const student = mapping && mapping[etuId] ? mapping[etuId] : {};
+                rows.push([
+                    currentJour,           // Jour
+                    currentSession,        // Session
+                    match[1].trim(),       // Salle
+                    match[2].trim(),       // Position
+                    student.nom || `Étudiant ${match[3].trim()}`, // Étudiant name
+                    student.spe || match[4].trim(),               // Spécialité
+                    student.tp || match[5].trim(),                // Tuteur pédagogique
+                    student.ti || match[6].trim()                 // Tuteur industriel
+                ]);
+            } else {
+                rows.push([currentJour, currentSession, line.trim()]);
+            }
         }
     });
-    return { wch: maxLen + 2 }; // Add padding
-});
+    return rows;
+}
 
+
+// Export to excel
+function exportMinizincResultToExcel() {
+    if (!gotten_result) {
+        alert("Aucun résultat MiniZinc disponible à exporter !");
+        return;
+    }   
+
+    const scheduleStr = window.lastMiniZincResult.solution.output.default;
+    const mapping = window.studentMapping || [];
+    const rows = parseScheduleString(scheduleStr, mapping);
+
+    // Turn into excel format
+    const worksheet = XLSX.utils.aoa_to_sheet(rows);
+
+    // Auto column width calculation
+    worksheet['!cols'] = rows[0].map((_, colIdx) => {
+        let maxLen = 10; // Minimum width
+        rows.forEach(row => {
+            const cell = row[colIdx];
+            if (cell && cell.toString().length > maxLen) {
+                maxLen = cell.toString().length;
+            }
+        });
+        return { wch: maxLen + 2 }; // Add padding
+    });
+
+
+    // Export
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Timetable");
     XLSX.writeFile(workbook, "exam-timetable.xlsx");
