@@ -7,7 +7,6 @@
 - Comment assurer que les adresses mail fournis sont les bons ? (dans le framadate)
 
 **But : Connaître et communiquer les disponibilités des tuteurs industriels**
-
 En entrée : Tableau convention de stage contenant
             - le nom des étudiants
             - le nom du tuteur industriel de chaque étudiant
