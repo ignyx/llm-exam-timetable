@@ -1,3 +1,11 @@
+**A faire**
+- Creation des IDs conf. à mettre dans le framadate comme nom pour la confidentialité
+    - Si possible, remplir le framadate en amont (avec les IDs conf.)
+- Créer un mail contenant que l'adresse mail du ti et leurs ID conf (pour la conf., un peu comme les notes à l'INSA)
+
+**Questions**
+- Comment assurer que les adresses mail fournis sont les bons ? (dans le framadate)
+
 **But : Connaître et communiquer les disponibilités des tuteurs industriels**
 
 En entrée : Tableau convention de stage contenant
