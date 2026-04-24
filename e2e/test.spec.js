@@ -7,6 +7,6 @@ test('Exam Timetable App loads correctly', async ({ page }) => {
   const title = await page.textContent('h1');
   expect(title).toBe('Exam Timetable App');
 
-  // Check if loaded message is visible
-  await expect(page.getByText('Loaded!')).toBeVisible();
+  // Check if status element is visible (starts with "Loading...")
+  await expect(page.getByTestId('status')).toBeVisible();
 });

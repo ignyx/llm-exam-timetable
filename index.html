@@ -2,21 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exam Timetabling</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
-    <div id="app">
-      <h1>Exam Timetable App</h1>
-      <p id="status" data-testid="status">Loading...</p>
-      <button data-testid="execute-button" onclick="runMinizincAndDisplay()">
-        Execute MiniZinc Model
-      </button>
-      <div id="results"></div>
-    </div>
+    <div id="root"></div>
     <script src="https://cdn.jsdelivr.net/npm/minizinc/dist/minizinc.js"></script>
-    <script src="src/minizincRunner.js"></script>
-    <script src="src/app.js"></script>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -1,31 +1,37 @@
 {
-  "type": "module",
   "name": "llm-exam-timetable",
-  "version": "0.0.1",
+  "private": true,
   "description": "Plan exam timetables using LLM-assisted constraint programming.",
-  "main": "index.html",
+  "version": "0.0.1",
+  "type": "module",
   "scripts": {
-    "start": "npx serve .",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "prettier --check . && eslint .",
+    "lint-fix": "prettier --write . && eslint --fix",
+    "preview": "vite preview",
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
-    "test:report": "npx playwright show-report",
-    "lint": "prettier --check . && eslint",
-    "lint-fix": "prettier --write . && eslint --fix"
+    "test:report": "npx playwright show-report"
+  },
+  "dependencies": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@playwright/test": "1.58.2",
-    "eslint": "10.0.3",
+    "@playwright/test": "^1.58.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@eslint-react/eslint-plugin": "^4.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
-    "prettier": "^3.2.5",
-    "serve": "14.2.6"
-  },
-  "keywords": [
-    "minizinc",
-    "timetabling"
-  ],
-  "author": "",
-  "license": "MIT",
-  "packageManager": "npm"
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.5.0",
+    "prettier": "^3.8.3",
+    "vite": "^8.0.10"
+  }
 }
