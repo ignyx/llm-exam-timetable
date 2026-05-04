@@ -1,5 +1,23 @@
 import { useState } from 'react';
+import * as MiniZinc from 'minizinc';
+// Import MiniZinc worker and WebAssembly files as URLs.
+// When bundling, vite will include these files in the output and provide their URLs.
+import minizincWorker from '../node_modules/minizinc/dist/minizinc-worker.js?url';
+import minizincWasm from '../node_modules/minizinc/dist/minizinc.wasm?url';
+import minizincData from '../node_modules/minizinc/dist/minizinc.data?url';
 
+MiniZinc.init({
+  workerURL: window.origin + minizincWorker,
+  wasmURL: window.origin + minizincWasm,
+  dataURL: window.origin + minizincData,
+})
+  .then(() => {
+    console.log('MiniZinc initialized successfully');
+  })
+  .catch((error) => {
+    console.error('Error initializing MiniZinc:', error);
+  });
+ 
 function ExamTimetableApp() {
   const [status, setStatus] = useState('Loading...');
   const [results, setResults] = useState('');
