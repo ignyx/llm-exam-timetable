@@ -1,6 +1,7 @@
 import { createAgent, tool } from 'langchain';
 import { ChatOpenAI } from '@langchain/openai';
 import * as z from 'zod';
+import * as MiniZinc from 'minizinc';
 
 const model = new ChatOpenAI({
   model: 'byteshape/Devstral-Small-2-24B-Instruct-2512-GGUF', // Specify a model available on OpenRouter
@@ -20,6 +21,7 @@ You can make tool calls to read the existing model and to make targeted changes 
 Available tools:
 - read_model: Read the current Minizinc model.
 - search_replace: Make targeted changes to the Minizinc model using SEARCH/REPLACE blocks.
+- run_model: Run the current Minizinc model and return the result status.
 
 Arguments:
 - content: The SEARCH/REPLACE blocks defining the changes
@@ -125,6 +127,26 @@ const searchReplaceTool = tool(
   }
 );
 
+const runModelTool = tool(
+  async () => {
+    const modelInstance = new MiniZinc.Model();
+    modelInstance.addString(existingModel);
+    const result = await modelInstance.solve({
+      options: {
+        solver: 'gecode',
+        'time-limit': 10000,
+        statistics: true,
+      },
+    });
+    console.log('Model run result:', result);
+    return result.status;
+  },
+  {
+    name: 'run_model',
+    description: 'Run the current Minizinc model and return the result status',
+  }
+);
+
 const getWeather = tool((input) => `It's always sunny in ${input.city}!`, {
   name: 'get_weather',
   description: 'Get the weather for a given city',
@@ -136,7 +158,7 @@ const getWeather = tool((input) => `It's always sunny in ${input.city}!`, {
 const agent = createAgent({
   model: model,
   // tools: [getWeather],
-  tools: [readModelTool, searchReplaceTool],
+  tools: [readModelTool, searchReplaceTool, runModelTool],
   systemPrompt: SYSTEM_PROMPT,
 });
 
@@ -146,7 +168,7 @@ console.log(
       {
         role: 'user',
         content:
-          'Look at the model and Explain what the model does. Then change the model to add a new variable z and a constraint that x + y + z < 5.',
+          'Look at the model and Explain what the model does. Then change the model to add a new variable z and a constraint that x + y + z < 5. Finally, run the modified model and return the result status.',
       },
     ],
   })
