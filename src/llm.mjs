@@ -9,6 +9,7 @@ const runLLM = async ({
   userPrompt = 'What is the weather like today?',
   modelName = 'byteshape/Devstral-Small-2-24B-Instruct-2512-GGUF',
   minizincModel = 'var 1..3: x;\nvar 1..3: y;\nconstraint x+y > 3;\nsolve satisfy;',
+  minizincDataFile = null,
 }) => {
   const llm = new ChatOpenAI({
     model: modelName,
@@ -25,7 +26,8 @@ const runLLM = async ({
     tools: [
       readModelTool(modelRef),
       searchReplaceTool(modelRef),
-      runModelTool(modelRef),
+      runModelTool(modelRef, minizincDataFile),
+      readDataFileTool(minizincDataFile),
     ],
     systemPrompt,
   });
@@ -63,6 +65,7 @@ Available tools:
 - read_model: Read the current Minizinc model.
 - search_replace: Make targeted changes to the Minizinc model using SEARCH/REPLACE blocks.
 - run_model: Run the current Minizinc model and return the result status.
+- read_data_file: Read the Minizinc data file (.dzn) content. This file is read-only.
 
 Arguments:
 - content: The SEARCH/REPLACE blocks defining the changes
@@ -122,6 +125,15 @@ const readModelTool = (modelRef) =>
     description: 'Read the current Minizinc model',
   });
 
+const readDataFileTool = (dataFile) =>
+  tool(
+    () => dataFile ?? 'No Minizinc data file available.',
+    {
+      name: 'read_data_file',
+      description: 'Read the Minizinc data file (.dzn) content. This file is read-only.',
+    }
+  );
+
 const searchReplaceTool = (modelRef) =>
   tool(
     (input) => {
@@ -170,11 +182,14 @@ const searchReplaceTool = (modelRef) =>
     }
   );
 
-const runModelTool = (modelRef) =>
+const runModelTool = (modelRef, dataFile) =>
   tool(
     async () => {
       const modelInstance = new MiniZinc.Model();
       modelInstance.addString(modelRef.val);
+      if (dataFile) {
+        modelInstance.addDznString(dataFile);
+      }
       const result = await modelInstance.solve({
         options: {
           solver: 'gecode',
@@ -188,7 +203,7 @@ const runModelTool = (modelRef) =>
     {
       name: 'run_model',
       description:
-        'Run the current Minizinc model and return the result status',
+        'Run the current Minizinc model with optional data file and return the result status',
     }
   );
 
