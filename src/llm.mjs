@@ -130,13 +130,11 @@ const readModelTool = (modelRef) =>
   });
 
 const readDataFileTool = (dataFile) =>
-  tool(
-    () => dataFile ?? 'No Minizinc data file available.',
-    {
-      name: 'read_data_file',
-      description: 'Read the Minizinc data file (.dzn) content. This file is read-only.',
-    }
-  );
+  tool(() => dataFile ?? 'No Minizinc data file available.', {
+    name: 'read_data_file',
+    description:
+      'Read the Minizinc data file (.dzn) content. This file is read-only.',
+  });
 
 const searchReplaceTool = (modelRef) =>
   tool(
