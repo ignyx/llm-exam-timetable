@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+
 export const toolList = `You can make tool calls to read the existing model and to make targeted changes using SEARCH/REPLACE blocks.
 
 Available tools:
@@ -173,5 +175,47 @@ var int : s): Requires that the sum of the weights ws [ i1 ].. ws [ iN ] equals 
 
 You are a Minizinc expert. Your task is to update an existing Minizinc model based on user requirements. Modify the model to meet the new requirements while ensuring it remains syntactically correct.
 ` + toolList,
+  },
+];
+
+const prompts = [
+  {
+    name: 'Tiny algebraic change',
+    model: `
+% Minizinc model start
+var 1..3: x;
+var 1..3: y;
+constraint x+y > 3;
+solve satisfy;
+% Minizinc model end`,
+    data: null,
+    userPrompt: `change the model to add a new variable z and a constraint that x + y + z < 5.`,
+  },
+  {
+    name: 'scheduling v0 - no advisor in multiple juries',
+    model: readFileSync('minizinc/thesis_scheduling_v0/model.mzn', 'utf-8'),
+    data: readFileSync(
+      'minizinc/thesis_scheduling_v0/small_example_success.dzn',
+      'utf-8'
+    ),
+    userPrompt: `Read the model and data file. Add a new constraint that prevents any advisor from being present in more than one jury at the same slot.`,
+  },
+  {
+    name: 'scheduling v0 - no advisor in multiple juries',
+    model: readFileSync('minizinc/thesis_scheduling_v0/model.mzn', 'utf-8'),
+    data: readFileSync(
+      'minizinc/thesis_scheduling_v0/small_example_success.dzn',
+      'utf-8'
+    ),
+    userPrompt: `Actually, students must attend 2 sessions.`,
+  },
+  {
+    name: 'scheduling v1 - no advisor in multiple juries',
+    model: readFileSync('minizinc/thesis_scheduling_v0/model.mzn', 'utf-8'),
+    data: readFileSync(
+      'minizinc/thesis_scheduling_v1/small_example_success.dzn',
+      'utf-8'
+    ),
+    userPrompt: `Add a new constraint that prevents any advisor from being present in more than one jury at the same slot.`,
   },
 ];
