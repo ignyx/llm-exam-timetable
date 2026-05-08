@@ -32,6 +32,7 @@ const runLLM = async ({
     systemPrompt,
   });
 
+  const startTime = Date.now();
   const response = await agent.invoke({
     messages: [
       {
@@ -40,6 +41,7 @@ const runLLM = async ({
       },
     ],
   });
+  const endTime = Date.now();
 
   const messageWithTokenUsage = response.messages.filter(
     (m) => m.usage_metadata
@@ -52,6 +54,8 @@ const runLLM = async ({
     output: response,
     tokenCount: tokenCount,
     finalModel: modelRef.val,
+    turnCount: response.messages.length,
+    duration: (endTime - startTime) / 1000,
   };
 };
 
