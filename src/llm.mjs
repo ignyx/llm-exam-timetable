@@ -3,7 +3,7 @@ import { ChatOpenAI } from '@langchain/openai';
 import * as z from 'zod';
 import * as MiniZinc from 'minizinc';
 
-const runLLM = async ({
+export const runLLM = async ({
   temperature = 0.3,
   systemPrompt = 'You are a helpful assistant.',
   userPrompt = 'What is the weather like today?',
@@ -152,13 +152,3 @@ const runModelTool = (modelRef, dataFile) =>
         'Run the current Minizinc model with optional data file and return the result status',
     }
   );
-
-console.log(
-  await runLLM({
-    userPrompt: `Look at the model and Explain what the model does.
-    Then change the model to add a new variable z and a constraint that x + y + z < 5.
-    Finally, run the modified model and return the result status.`,
-    systemPrompt: SYSTEM_PROMPT,
-    minizincModel: existingModel,
-  })
-);

@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { runLLM } from './llm.mjs';
 
 export const toolList = `You can make tool calls to read the existing model and to make targeted changes using SEARCH/REPLACE blocks.
 
@@ -219,3 +220,48 @@ solve satisfy;
     userPrompt: `Add a new constraint that prevents any advisor from being present in more than one jury at the same slot.`,
   },
 ];
+
+export const runEval = async () => {
+  let results = [];
+  for (const systemPrompt of systemPrompts) {
+    console.log(`\n\n=== System Prompt Level ${systemPrompt.level} ===\n\n`);
+    for (const prompt of prompts) {
+      console.log(`\n--- Prompt: ${prompt.name} ---\n`);
+      // run 5 times
+      for (let i = 0; i < 5; i++) {
+        console.log(`\nRun ${i + 1}:\n`);
+        try {
+          const result = await runLLM({
+            systemPrompt: systemPrompt.prompt,
+            userPrompt: prompt.userPrompt,
+            model: prompt.model,
+            data: prompt.data,
+          });
+          const { output, tokenCount, finalModel, turnCount, duration } =
+            result;
+          console.log('LLM Result:', result);
+          results.push({
+            systemPromptLevel: systemPrompt.level,
+            promptName: prompt.name,
+            run: i + 1,
+            tokenCount,
+            turnCount,
+            duration,
+          });
+        } catch (error) {
+          console.error('Error:', error);
+          results.push({
+            systemPromptLevel: systemPrompt.level,
+            promptName: prompt.name,
+            run: i + 1,
+            error: error.message,
+          });
+        }
+      }
+    }
+  }
+  console.log('\n\n=== Evaluation Results ===\n\n');
+  results.forEach(console.log);
+};
+
+await runEval();
