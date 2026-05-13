@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { runLLM } from './llm.mjs';
+import * as MiniZinc from 'minizinc';
 
 export const toolList = `You can make tool calls to read the existing model and to make targeted changes using SEARCH/REPLACE blocks.
 
@@ -56,13 +57,13 @@ export const systemPrompts = [
   {
     level: 1,
     prompt:
-      `You are a Minizinc expert. Your task is to update an existing Minizinc model based on user requirements. Modify the model to meet the new requirements while ensuring it remains syntactically correct.` +
+      `You are a Minizinc expert. Your task is to update an existing Minizinc model based on user requirements. Modify the model to meet the new requirements while ensuring it remains syntactically correct. Ensure the model runs and is satisfiable.` +
       toolList,
   },
   {
     level: 2,
     prompt:
-      `You are a Minizinc expert. Your task is to update an existing Minizinc model based on user requirements. Modify the model to meet the new requirements while ensuring it remains syntactically correct.` +
+      `You are a Minizinc expert. Your task is to update an existing Minizinc model based on user requirements. Modify the model to meet the new requirements while ensuring it remains syntactically correct. Ensure the model runs and is satisfiable.` +
       toolList +
       `
 
@@ -174,14 +175,14 @@ means that i is not in the circuit .
 var int : s): Requires that the sum of the weights ws [ i1 ].. ws [ iN ] equals s , where vs
 [ i1 ].. vs [ iN ] are the elements appearing in set x.
 
-You are a Minizinc expert. Your task is to update an existing Minizinc model based on user requirements. Modify the model to meet the new requirements while ensuring it remains syntactically correct.
+You are a Minizinc expert. Your task is to update an existing Minizinc model based on user requirements. Modify the model to meet the new requirements while ensuring it remains syntactically correct. Ensure the model runs and is satisfiable.
 ` + toolList,
   },
 ];
 
 const prompts = [
   {
-    name: 'Tiny algebraic change',
+    name: 'A.',
     model: `
 % Minizinc model start
 var 1..3: x;
@@ -190,10 +191,10 @@ constraint x+y > 3;
 solve satisfy;
 % Minizinc model end`,
     data: null,
-    userPrompt: `change the model to add a new variable z and a constraint that x + y + z < 5.`,
+    userPrompt: `change the model to add a new variable z and a constraint that x + y + z < 6.`,
   },
   {
-    name: 'scheduling v0 - no advisor in multiple juries',
+    name: 'B.',
     model: readFileSync('minizinc/thesis_scheduling_v0/model.mzn', 'utf-8'),
     data: readFileSync(
       'minizinc/thesis_scheduling_v0/small_example_success.dzn',
@@ -202,7 +203,7 @@ solve satisfy;
     userPrompt: `Read the model and data file. Add a new constraint that prevents any advisor from being present in more than one jury at the same slot.`,
   },
   {
-    name: 'scheduling v0 - no advisor in multiple juries',
+    name: 'C.',
     model: readFileSync('minizinc/thesis_scheduling_v0/model.mzn', 'utf-8'),
     data: readFileSync(
       'minizinc/thesis_scheduling_v0/small_example_success.dzn',
@@ -211,8 +212,8 @@ solve satisfy;
     userPrompt: `Actually, students must attend 2 sessions.`,
   },
   {
-    name: 'scheduling v1 - no advisor in multiple juries',
-    model: readFileSync('minizinc/thesis_scheduling_v0/model.mzn', 'utf-8'),
+    name: 'D.',
+    model: readFileSync('minizinc/thesis_scheduling_v1/model.mzn', 'utf-8'),
     data: readFileSync(
       'minizinc/thesis_scheduling_v1/small_example_success.dzn',
       'utf-8'
@@ -234,12 +235,35 @@ export const runEval = async () => {
           const result = await runLLM({
             systemPrompt: systemPrompt.prompt,
             userPrompt: prompt.userPrompt,
-            model: prompt.model,
-            data: prompt.data,
+            minizincModel: prompt.model,
+            minizincDataFile: prompt.data,
           });
           const { output, tokenCount, finalModel, turnCount, duration } =
             result;
           console.log('LLM Result:', result);
+
+          let modelStatus;
+          let modelHasChanged = finalModel != prompt.model;
+          try {
+            const modelInstance = new MiniZinc.Model();
+            modelInstance.addString(finalModel);
+            if (prompt.data) {
+              modelInstance.addDznString(prompt.data);
+            }
+            const result = await modelInstance.solve({
+              options: {
+                solver: 'gecode',
+                'time-limit': 10000,
+                statistics: true,
+              },
+            });
+            modelStatus = result.status;
+            console.log('Model run result:', result);
+          } catch (error) {
+            modelStatus = 'error';
+            console.error('Error running model:', error);
+          }
+
           results.push({
             systemPromptLevel: systemPrompt.level,
             promptName: prompt.name,
@@ -247,6 +271,8 @@ export const runEval = async () => {
             tokenCount,
             turnCount,
             duration,
+            modelStatus,
+            modelHasChanged,
           });
         } catch (error) {
           console.error('Error:', error);
@@ -261,7 +287,7 @@ export const runEval = async () => {
     }
   }
   console.log('\n\n=== Evaluation Results ===\n\n');
-  results.forEach(console.log);
+  console.log(results);
 };
 
 await runEval();
