@@ -21,7 +21,12 @@ function calculateAverages(data) {
   data.forEach((entry) => {
     const key = `${entry.systemPromptLevel}_${entry.promptName}`;
     if (!entry.error) {
-      results[key].successfulRuns += 1;
+      if (
+        entry.modelHasChanged &&
+        (entry.modelStatus == 'SATISFIED' ||
+          entry.modelStatus == 'OPTIMAL_SOLUTION')
+      )
+        results[key].successfulRuns += 1;
       results[key].totalTokenCount += entry.tokenCount || 0;
       results[key].totalTurnCount += entry.turnCount || 0;
       results[key].totalDuration += entry.duration || 0;
@@ -70,3 +75,7 @@ calculateAverages(data)
       `SuperModel & ${a.promptName} & Level ${a.systemPromptLevel} & ${a.successfulRuns}/5 & ${a.avgTurnCount} & ${a.avgTokenCount} & ${a.avgDuration} \\`
   )
   .join('\n');
+
+calculateAverages(data)
+  .map((a) => `${a.successfulRuns}/5 & `)
+  .join('');
