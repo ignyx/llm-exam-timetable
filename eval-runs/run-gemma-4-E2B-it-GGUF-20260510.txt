@@ -44195,7 +44195,7 @@ Parsed SEARCH/REPLACE blocks: [
 } 59 [
   {
     systemPromptLevel: 1,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 1,
     tokenCount: 836,
     turnCount: 6,
@@ -44203,7 +44203,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 1,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 2,
     tokenCount: 836,
     turnCount: 6,
@@ -44211,7 +44211,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 1,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 3,
     tokenCount: 836,
     turnCount: 6,
@@ -44219,7 +44219,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 1,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 4,
     tokenCount: 836,
     turnCount: 6,
@@ -44227,7 +44227,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 1,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 5,
     tokenCount: 836,
     turnCount: 6,
@@ -44275,7 +44275,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 1,
     tokenCount: 933,
     turnCount: 8,
@@ -44283,7 +44283,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 2,
     tokenCount: 815,
     turnCount: 8,
@@ -44291,7 +44291,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 3,
     tokenCount: 806,
     turnCount: 8,
@@ -44299,7 +44299,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 4,
     tokenCount: 827,
     turnCount: 8,
@@ -44307,7 +44307,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 5,
     tokenCount: 792,
     turnCount: 8,
@@ -44355,7 +44355,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 2,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 1,
     tokenCount: 1602,
     turnCount: 10,
@@ -44363,7 +44363,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 2,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 2,
     tokenCount: 1657,
     turnCount: 10,
@@ -44371,7 +44371,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 2,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 3,
     error: 'Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the "recursionLimit" config key.\n' +
       '\n' +
@@ -44379,7 +44379,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 2,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 4,
     tokenCount: 1465,
     turnCount: 8,
@@ -44387,7 +44387,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 2,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 5,
     tokenCount: 1216,
     turnCount: 10,
@@ -44435,7 +44435,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 1,
     tokenCount: 991,
     turnCount: 8,
@@ -44443,7 +44443,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 2,
     tokenCount: 1040,
     turnCount: 8,
@@ -44451,7 +44451,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 3,
     tokenCount: 996,
     turnCount: 8,
@@ -44459,7 +44459,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 4,
     tokenCount: 1003,
     turnCount: 8,
@@ -44467,7 +44467,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 5,
     tokenCount: 1000,
     turnCount: 8,
@@ -44515,7 +44515,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 3,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 1,
     tokenCount: 2655,
     turnCount: 6,
@@ -44523,7 +44523,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 3,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 2,
     tokenCount: 2749,
     turnCount: 6,
@@ -44531,7 +44531,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 3,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 3,
     tokenCount: 2703,
     turnCount: 6,
@@ -44539,7 +44539,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 3,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 4,
     tokenCount: 2647,
     turnCount: 6,
@@ -44547,7 +44547,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 3,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 5,
     tokenCount: 2635,
     turnCount: 6,
@@ -44595,7 +44595,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 3,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 1,
     tokenCount: 2383,
     turnCount: 8,
@@ -44603,7 +44603,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 3,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 2,
     tokenCount: 2395,
     turnCount: 8,
@@ -44611,7 +44611,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 3,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 3,
     tokenCount: 2394,
     turnCount: 8,
@@ -44619,7 +44619,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 3,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 4,
     tokenCount: 2409,
     turnCount: 8,
@@ -44627,7 +44627,7 @@ Parsed SEARCH/REPLACE blocks: [
   },
   {
     systemPromptLevel: 3,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 5,
     tokenCount: 2552,
     turnCount: 10,

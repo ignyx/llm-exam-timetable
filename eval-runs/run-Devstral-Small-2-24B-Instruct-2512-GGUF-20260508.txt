@@ -44650,7 +44650,7 @@ LLM Result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 1,
     error: 'Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the "recursionLimit" config key.\n' +
       '\n' +
@@ -44658,7 +44658,7 @@ LLM Result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 2,
     tokenCount: 1174,
     turnCount: 8,
@@ -44666,7 +44666,7 @@ LLM Result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 3,
     tokenCount: 1168,
     turnCount: 6,
@@ -44674,7 +44674,7 @@ LLM Result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 4,
     tokenCount: 845,
     turnCount: 2,
@@ -44682,7 +44682,7 @@ LLM Result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 5,
     tokenCount: 2269,
     turnCount: 18,
@@ -44810,7 +44810,7 @@ LLM Result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 1,
     tokenCount: 1656,
     turnCount: 12,
@@ -44818,7 +44818,7 @@ LLM Result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 2,
     tokenCount: 1660,
     turnCount: 12,
@@ -44826,7 +44826,7 @@ LLM Result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 3,
     tokenCount: 1308,
     turnCount: 8,
@@ -44834,7 +44834,7 @@ LLM Result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 4,
     error: 'Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the "recursionLimit" config key.\n' +
       '\n' +
@@ -44842,7 +44842,7 @@ LLM Result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 5,
     error: 'Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the "recursionLimit" config key.\n' +
       '\n' +

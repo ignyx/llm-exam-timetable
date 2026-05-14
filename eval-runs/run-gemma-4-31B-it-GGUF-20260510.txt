@@ -39360,7 +39360,7 @@ Model run result: {
 } 59 [
   {
     systemPromptLevel: 1,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 1,
     tokenCount: 2577,
     turnCount: 8,
@@ -39368,7 +39368,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 2,
     tokenCount: 1174,
     turnCount: 8,
@@ -39376,7 +39376,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 3,
     tokenCount: 1142,
     turnCount: 8,
@@ -39384,7 +39384,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 4,
     tokenCount: 1127,
     turnCount: 8,
@@ -39392,7 +39392,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 5,
     tokenCount: 1532,
     turnCount: 8,
@@ -39440,7 +39440,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 1,
     tokenCount: 3074,
     turnCount: 10,
@@ -39448,7 +39448,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 2,
     tokenCount: 2072,
     turnCount: 10,
@@ -39456,7 +39456,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 3,
     tokenCount: 2256,
     turnCount: 12,
@@ -39464,7 +39464,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 4,
     tokenCount: 2138,
     turnCount: 10,
@@ -39472,7 +39472,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 1,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 5,
     tokenCount: 1766,
     turnCount: 10,
@@ -39520,7 +39520,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 1,
     tokenCount: 1216,
     turnCount: 8,
@@ -39528,7 +39528,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 2,
     tokenCount: 1139,
     turnCount: 8,
@@ -39536,7 +39536,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 3,
     tokenCount: 1442,
     turnCount: 8,
@@ -39544,7 +39544,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 4,
     tokenCount: 1351,
     turnCount: 8,
@@ -39552,7 +39552,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 5,
     tokenCount: 1329,
     turnCount: 8,
@@ -39600,7 +39600,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 1,
     tokenCount: 1708,
     turnCount: 10,
@@ -39608,7 +39608,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 2,
     tokenCount: 1456,
     turnCount: 10,
@@ -39616,7 +39616,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 3,
     tokenCount: 2104,
     turnCount: 10,
@@ -39624,7 +39624,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 4,
     tokenCount: 2420,
     turnCount: 12,
@@ -39632,7 +39632,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 2,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 5,
     tokenCount: 2106,
     turnCount: 10,
@@ -39680,7 +39680,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 3,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 1,
     tokenCount: 2626,
     turnCount: 8,
@@ -39688,7 +39688,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 3,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 2,
     tokenCount: 2563,
     turnCount: 6,
@@ -39696,7 +39696,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 3,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 3,
     tokenCount: 2657,
     turnCount: 8,
@@ -39704,7 +39704,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 3,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 4,
     tokenCount: 2931,
     turnCount: 8,
@@ -39712,7 +39712,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 3,
-    promptName: 'Tiny algebraic change',
+    promptName: 'A.',
     run: 5,
     tokenCount: 2939,
     turnCount: 8,
@@ -39760,7 +39760,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 3,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 1,
     tokenCount: 3379,
     turnCount: 10,
@@ -39768,7 +39768,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 3,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 2,
     tokenCount: 4005,
     turnCount: 10,
@@ -39776,7 +39776,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 3,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 3,
     tokenCount: 3274,
     turnCount: 12,
@@ -39784,7 +39784,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 3,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 4,
     tokenCount: 3257,
     turnCount: 10,
@@ -39792,7 +39792,7 @@ Model run result: {
   },
   {
     systemPromptLevel: 3,
-    promptName: 'scheduling v0 - no advisor in multiple juries',
+    promptName: 'C.',
     run: 5,
     tokenCount: 3072,
     turnCount: 10,
