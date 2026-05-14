@@ -108,3 +108,14 @@ git commit -m "refactor: improve exam data structure"
 ```
 
 [convetional-commits]: https://www.conventionalcommits.org/en/v1.0.0/
+
+## Run evaluation
+
+Existing evaluation runs are in `./eval-runs/`.
+
+To run evaluations yourself, edit `./src/llm.mjs` with your OpenAI-compatible API endpoint and API key.
+You can use `llama.cpp` to run a local instance.
+
+```bash
+node src/llmEval.mjs | tee run.txt
+```
