@@ -1,0 +1,36 @@
+{
+  "nbStud": 10,
+  "nbPT": 3,
+  "nbSpe": 2,
+  "nbRoom": 2,
+  "nbIT": 10,
+  "nbDay": 1,
+  "nbCompany": 8,
+
+  "studentPT": [1, 1, 1, 2, 3, 1, 2, 2, 3, 3],
+  "studentIT": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  "studentSpe": [1, 1, 1, 1, 1, 2, 2, 2, 2, 2],
+  "studentCpn": [1, 1, 2, 2, 3, 4, 5, 6, 7, 8],
+
+  "IncompatiblesPairs": [
+    { "cpn1": 1, "cpn2": 2 },
+    { "cpn1": 5, "cpn2": 6 }
+  ],
+
+  "SpeAvail_perDay": [[true], [true]],
+
+  "TPAvail": [[[true, true, true]], [[true, true, true]], [[true, true, true]]],
+
+  "ITAvail": [
+    [[true, true, true]],
+    [[true, true, true]],
+    [[true, true, true]],
+    [[true, true, true]],
+    [[true, true, true]],
+    [[true, true, true]],
+    [[true, true, true]],
+    [[true, true, true]],
+    [[true, true, true]],
+    [[true, true, true]]
+  ]
+}
