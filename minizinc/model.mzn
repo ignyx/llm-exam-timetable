@@ -1,7 +1,7 @@
 %! -- INTERN PARAMETERS -- 
 
 set of int: Sessions = 1..3;
-set of int: Positions = 1..3;
+set of int: Positions = 1..4;
  
 
 %! -- EXTERN PARAMETERS --  
@@ -18,7 +18,7 @@ int: nbCompany;
 % Sets 
 set of int: Students = 1..nbStud;
 set of int: PTutors = 1..nbPT;
-set of int: ITutors = 1..nnIT;
+set of int: ITutors = 1..nbIT;
 set of int: Rooms = 1..nbRoom;
 set of int: Days = 1..nbDay;
 set of int: Spe = 1..nbSpe;
@@ -102,31 +102,31 @@ constraint forall(e, f in Students where e < f, c in IncompatiblesPairs
 );
 
 % Availability of the industrial tutors
-var int: ITAvail;
-constraint ITAvail = sum(e in Students) (
+var int: scoreITAvail;
+constraint scoreITAvail = sum(e in Students) (
     2*bool2int(ITAvail[studentsIT[e], day[e], session[e]])
 );
 
-var int: PairsStudents;
-var int: MoreThanPairsStudents;
+var int: scorePairsStudents;
+var int: scoreMoreThanPairsStudents;
 
 % Pair students up for a session, if possible.
-constraint PairsStudents = sum(e, f in Students where e < f and studentsPT[e] == studentsPT[f]) (
+constraint scorePairsStudents = sum(e, f in Students where e < f and studentsPT[e] == studentsPT[f]) (
     5*bool2int(sameSession(e, f))
 );
 % More than 2 students with the same tutor in the same session is not good, we penalize it a lot.
-constraint MoreThanPairsStudents = sum(e, f, g in Students where e < f and f < g and studentsPT[e] == studentsPT[f] and studentsPT[f] == studentsPT[g]) (
+constraint scoreMoreThanPairsStudents = sum(e, f, g in Students where e < f and f < g and studentsPT[e] == studentsPT[f] and studentsPT[f] == studentsPT[g]) (
     -30*bool2int(sameSession(e, f) and sameSession(f, g))
 );
 
 %  Failure to attend an entire session will result in a penalty.
-var int: entireSessionPresence;
-constraint entireSessionPresence = sum(e, f in Students where e > f /\ studentsPT[e] == studentsPT[f])(
+var int: scoreEntireSessionPresence;
+constraint scoreEntireSessionPresence = sum(e, f in Students where e > f /\ studentsPT[e] == studentsPT[f])(
     -1000*bool2int(sameSession(e, f) /\ room[e] != room[f])
 );
 
 var int : finalScore;
-constraint finalScore = PairsStudents + MoreThanPairsStudents + entireSessionPresence + ITAvail;
+constraint finalScore = scorePairsStudents + scoreMoreThanPairsStudents + scoreEntireSessionPresence + scoreITAvail;
 
 %! -- Objective --
 solve  maximize finalScore;
